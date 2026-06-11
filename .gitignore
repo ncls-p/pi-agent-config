@@ -1,0 +1,33 @@
+# credentials / local auth
+auth.json
+agent/auth.json
+**/*auth*.json
+**/.env
+**/.env.*
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+
+# runtime sessions, caches, databases
+agent/sessions/
+context-mode/
+agent/*cache*.json
+agent/trust.json
+pi-acp/
+*.db
+*.db-shm
+*.db-wal
+
+# installed binaries / dependencies / vendored deps
+agent/bin/
+agent/npm/node_modules/
+agent/git/
+deps/
+
+# OS/editor noise
+.DS_Store
+*.swp
+
+# pi internals / unrelated local project files
+mix.lock

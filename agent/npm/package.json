@@ -1,0 +1,14 @@
+{
+  "name": "pi-extensions",
+  "private": true,
+  "dependencies": {
+    "@feniix/pi-exa": "^5.0.0",
+    "context-mode": "^1.0.162",
+    "pi-agent-browser": "^0.1.0",
+    "pi-extmgr": "^0.3.0",
+    "pi-hermes-memory": "^0.7.15",
+    "pi-lens": "^3.8.50",
+    "pi-markdown-preview": "^0.10.0",
+    "pi-mcp-adapter": "^2.9.0"
+  }
+}

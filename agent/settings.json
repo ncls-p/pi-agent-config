@@ -1,0 +1,21 @@
+{
+  "lastChangelogVersion": "0.79.1",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.5",
+  "defaultThinkingLevel": "medium",
+  "packages": [
+    "npm:pi-lens",
+    "npm:pi-mcp-adapter",
+    "npm:pi-extmgr",
+    "npm:pi-markdown-preview",
+    "npm:@feniix/pi-exa",
+    "npm:context-mode",
+    "npm:pi-hermes-memory"
+  ],
+  "enabledModels": [
+    "openai-codex/gpt-5.5",
+    "cortex/qwen3.6-27b",
+    "cortex/gemma4-31b"
+  ],
+  "theme": "pi-minimal"
+}
