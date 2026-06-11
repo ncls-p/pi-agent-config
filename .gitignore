@@ -31,3 +31,4 @@ deps/
 
 # pi internals / unrelated local project files
 mix.lock
+agent/models.json
