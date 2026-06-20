@@ -1,9 +1,7 @@
-ai-hub tests live in `test/` directory (not `src/`), organized as `test/unit/` and `test/e2e/`. Use `npm run test:ci` to run. The worker queue (`src/server/infrastructure/worker/index.ts`) is in-memory (JS array) — jobs lost on restart; needs Redis/Dragonfly persistence. Auth (`src/lib/auth.ts`) has hardcoded dev IPs (192.168.x, 100.90.x, 100.98.x) in `developmentOrigins`. Silent catch patterns return null/undefined/[] without logging — ~229 catch blocks total. Some API routes lack Zod input validation. <!-- created=2026-06-07, last=2026-06-07 -->
+ai-hub essentials/gotchas: tests live in `test/unit` + `test/e2e`; run `npm run test:ci`; use `python3` (not `python`). Risks: in-memory worker queue loses jobs on restart; `src/lib/auth.ts` hardcodes dev IP origins; silent catches/API routes may need logging + Zod validation. Tool quirks: use Node Unicode regex for emoji search; pi-lens ignores `eslint-disable`, so restructure code. <!-- created=2026-06-07, last=2026-06-11 -->
 §
-Shell grep may fail with unicode emojis in some environments; use a Node.js script with a unicode-aware regex range (e.g., /[\u{1F300}-\u{1F9FF}...]/gu) for reliable detection. <!-- created=2026-06-10, last=2026-06-10 -->
+Environment/tooling: `gh` CLI is not installed in the ai-hub workspace environment (`gh: command not found`); use plain `git` commands or other available APIs instead of GitHub CLI here. <!-- created=2026-06-15, last=2026-06-15 -->
 §
-Pi-lens diagnostic rules do not respect eslint-disable comments. To resolve linter warnings that pi-lens flags, the code must be restructured (e.g., moving state updates from useEffect to async .then() callbacks) rather than relying on disable comments. <!-- created=2026-06-10, last=2026-06-10 -->
+Tool quirk: `npx tsx -e` may reject top-level `await` in this repo with CJS output; wrap inline smoke-test code in an async IIFE. <!-- created=2026-06-18, last=2026-06-18 -->
 §
-Environment/tool quirk: `python` may be missing in ai-hub shell (`command not found`); use `python3` for ad-hoc scripts. <!-- created=2026-06-11, last=2026-06-11 -->
-§
-Tool quirk in ai-hub shell: `python` is not available (`command not found`); use `python3` or uv-managed Python instead. <!-- created=2026-06-11, last=2026-06-11 -->
+Next.js/TS quirk: `NextResponse` body types may reject `Uint8Array`; convert bytes to an `ArrayBuffer` (copy) before returning binary ZIP responses. <!-- created=2026-06-18, last=2026-06-18 -->

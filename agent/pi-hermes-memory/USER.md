@@ -1,18 +1,12 @@
-ai-hub UX: keep clean/minimal/beautiful (ChatGPT/Gemini/OpenWebUI), advanced hidden by default, and preserve white/blue palette + current font. Custom tool builder must not mention n8n/internal backend; use simple schematic workflow diagrams; secrets via chat card/button before modals with clear field explanations; progress must be real, not fake timers. <!-- created=2026-06-01, last=2026-06-09 -->
+ai-hub UX: keep pages clean/minimal/beautiful (ChatGPT/Gemini/OpenWebUI), less “AI slop,” advanced options hidden by default, preserving white/blue palette + current font. Custom tool builder must never mention n8n/internal backend; use simple schematic workflow diagrams; secrets via chat card/button before modals with clear field explanations; progress must be real, not fake timers. <!-- created=2026-06-01, last=2026-06-13 -->
 §
-Work style: prefers direct execution with minimal chatter after planning; if asking only for a plan, give a concise plan immediately; write plans to .md only when asked; “fini” means finish implementation. For “why is this failing?”, explain root cause first and fix only after asked. <!-- created=2026-06-01, last=2026-06-09 -->
+Work/preferences: direct execution, minimal chatter. If only asking for a plan, give a concise plan; write .md only when asked. “fini”=finish implementation. “why failing?”=root cause first, fix only if asked. “Calme toi et continue”=stop explaining/looping and execute quietly. Avoid long polling loops; summarize state and ask next action. Technical emails: humble/collaborative. Web searches must include today’s date. Prefer uv for Python envs. <!-- created=2026-06-01, last=2026-06-15 -->
 §
-UI streaming: prefer text opacity fades over blur; fast/smooth, only last tokens/line, no destructive CSS mask or visible cursor. <!-- created=2026-06-01, last=2026-06-06 -->
-§
-L'utilisateur préfère un ton humble et collaboratif dans les mails techniques; éviter les formulations qui semblent expliquer à un expert ce qu'il sait déjà ou paraître arrogant. <!-- created=2026-06-02, last=2026-06-02 -->
+General UI/UX: clean, minimal, intentional, balanced contrast, subtle modern animations. Avoid AI-slop/glow/sheens/animated avatars/busy loaders/large colored backgrounds. Streaming/reasoning should feel fast: opacity fades on last tokens/line only; no destructive masks or visible cursors. Reasoning stays collapsed with discreet in-progress/done indicator unless user expands. For “plus” then “trop” contrast feedback, choose the balanced middle. <!-- created=2026-06-01, last=2026-06-15 -->
 §
 Préfère utiliser uv pour les environnements Python (python envs) plutôt que venv/pip classiques. <!-- created=2026-06-04, last=2026-06-04 -->
 §
-Prefers improving existing solutions before building new ones (e.g. ACP/PI features); ask whether existing paths can be enhanced first. <!-- created=2026-06-06, last=2026-06-06 -->
-§
-When extending PI protocols/features, user prefers improving or adapting PI’s existing built-in exposure path rather than creating a separate sidecar/duplicate service. <!-- created=2026-06-06, last=2026-06-06 -->
-§
-Custom tool builder UX preference for ai-hub: keep page minimal, never expose n8n/internal backend wording to end users, show workflow as simple visual diagrams/schemas, show a chat button before opening secret modals (do not auto-open), clearly explain what each modal field needs, and never fake progress counters. <!-- created=2026-06-06, last=2026-06-06 -->
+Implementation preference: improve/adapt existing solutions before building new ones. For PI protocols/features, prefer using PI’s built-in exposure path rather than separate sidecars/duplicate services. <!-- created=2026-06-06, last=2026-06-13 -->
 §
 For local image-service Ideogram work, user’s priority is fixing bugged censorship/safety behavior and using Ideogram structured JSON prompts because Ideogram is trained for that format. <!-- created=2026-06-07, last=2026-06-07 -->
 §
@@ -22,8 +16,12 @@ L'utilisateur indique que quand ses LLM utilisent context-mode, l'output complet
 §
 Web searches must include today's date. UI contrast iterations: user will iterate ("plus" then "trop") — aim for balanced middle ground, don't over-darken. <!-- created=2026-06-08, last=2026-06-10 -->
 §
-When I get stuck in loops or over-explain, user says "calme toi et continue" (calm down and continue) — meaning: stop explaining, just execute silently. This reinforces their general preference for direct execution with minimal chatter. <!-- created=2026-06-10, last=2026-06-10 -->
+For ai-hub, user wants workflows/logique simplified like `../AltScribe/`: admin, users, marketplace, onboarding, and permission concepts should avoid visible workspace/enterprise complexity and use a simple user/admin model where possible. <!-- created=2026-06-15, last=2026-06-15 -->
 §
-User communicates design feedback iteratively in French: first "manque de contraste" (too little), then "plus encore" (more), then "c'est trop" (too much) — prefers the agent find a middle ground through iterative adjustments rather than getting it perfect on the first try. <!-- created=2026-06-10, last=2026-06-10 -->
+User is comfortable with the agent committing and pushing directly when fixing production/deployment issues; they explicitly said “hésite pas à commit et push direct.” <!-- created=2026-06-15, last=2026-06-15 -->
 §
-ai-hub UI preference reinforced: some pages feel too complex or “AI slop” (example `/en/tools`); prefer simplifying existing pages into cleaner, less generic, more intentional designs. <!-- created=2026-06-11, last=2026-06-11 -->
+Preference for AI Hub UI: remove bot/robot emoji/iconography; keep the interface clean and light, with Deodis colors used subtly rather than heavily. <!-- created=2026-06-17, last=2026-06-17 -->
+§
+Prefers the AI Hub UI to avoid bot/robot emoji or iconography; when discussing UI polish, avoid decorative emoji and AI-slop visuals. <!-- created=2026-06-17, last=2026-06-17 -->
+§
+User prefers not to commit/push changes automatically; leave changes uncommitted so they can test first unless they explicitly ask to commit/push. <!-- created=2026-06-19, last=2026-06-19 -->
