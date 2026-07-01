@@ -1,77 +1,81 @@
-# pi-agent-config
+# 🤖 pi-agent-config
 
-Configuration du [pi coding agent](https://github.com/earendil-works/pi) — extensions, thèmes, MCP servers, et packages npm.
+Configuration for my [pi coding agent](https://github.com/earendil-works/pi) setup — extensions, themes, MCP servers, and npm packages.
 
-## Contenu
+## 📦 Contents
 
-| Dossier / Fichier | Description |
+| Path | Description |
 |---|---|
-| `agent/settings.json` | Paramètres globaux (thème, modèles, packages) |
-| `agent/mcp.json` | Serveurs MCP (WebAccess, chrome-devtools) |
-| `agent/npm/` | Packages npm (`pi-lens`, `pi-mcp-adapter`) |
-| `agent/extensions/` | Extensions TUI custom (`minimal-ui`) |
-| `agent/themes/` | Thèmes TUI (`minimal-ui`) |
-| `.mcp.json` | Config MCP partagée (vide = pas d'override) |
-| `.gitignore` | Exclut les secrets et fichiers locaux |
+| `agent/settings.json` | Global settings (theme, models, packages) |
+| `agent/mcp.json` | MCP server configuration (WebAccess, chrome-devtools) |
+| `agent/npm/` | npm workspace (`pi-lens`, `pi-mcp-adapter`) |
+| `agent/extensions/` | Custom TUI extensions (`minimal-ui`) |
+| `agent/themes/` | TUI themes (`minimal-ui`) |
+| `.mcp.json` | Shared MCP config (empty = no override) |
+| `.gitignore` | Excludes secrets and local files |
 
-## Installation sur une nouvelle machine
+## 🚀 Quick Start
 
-### 1. Pré-requis
+### Prerequisites
 
 - Node.js ≥ 20
-- [pi coding agent](https://github.com/earendil-works/pi) installé
+- [pi coding agent](https://github.com/earendil-works/pi) installed
 
-### 2. Cloner le repo
+### Clone the repo
 
 ```bash
 git clone git@github.com:ncls-p/pi-agent-config.git ~/.pi
 ```
 
-### 3. Installer les packages npm
+### Install npm packages
 
 ```bash
 cd ~/.pi/agent/npm
 npm install
 ```
 
-### 4. Configurer les credentials locaux
+### Configure local credentials
 
-Les fichiers suivants sont exclus du repo et doivent être créés manuellement :
+The following files are git-ignored and must be created manually:
 
-- **`agent/auth.json`** — Tokens d'authentification (OAuth OpenAI, etc.)
-- **`agent/models.json`** — Configuration des providers locaux (baseUrl, apiKey)
-- **`agent/trust.json`** — Liste des répertoires de confiance
+| File | Purpose |
+|---|---|
+| `agent/auth.json` | OAuth tokens (OpenAI, etc.) |
+| `agent/models.json` | Local provider config (baseUrl, apiKey) |
+| `agent/trust.json` | Trusted project directories |
 
-> 💡 `agent/mcp.json` utilise `${WEBACCESS_API_KEY}` — assure-toi que cette variable d'environnement est définie :
+> **Note:** `agent/mcp.json` references `${WEBACCESS_API_KEY}` — make sure this environment variable is set:
 >
 > ```bash
-> export WEBACCESS_API_KEY="votre-cle-ici"
+> export WEBACCESS_API_KEY="your-api-key-here"
 > ```
 
-### 5. Lancer pi
+### Start pi
 
 ```bash
 pi
 ```
 
-## Modèles configurés
+## 🤖 Models
 
-| Provider | Modèle |
+| Provider | Model |
 |---|---|
-| cortex (local) | `nvidia/Qwen3.6-27B-NVFP4` |
-| openai-codex | `gpt-5.5` |
+| **cortex** (local) | `nvidia/Qwen3.6-27B-NVFP4` |
+| **openai-codex** | `gpt-5.5` |
 
-## Thème
+## 🎨 Theme
 
-`minimal-ui` — Thème sombre minimaliste (fond `#0a0a0c`, texte blanc, accents bleus/violets).
+`minimal-ui` — A minimal dark theme (background `#0a0a0c`, white text, blue/violet accents).
 
-## Fichiers non-suivis (`.gitignore`)
+## 🔒 Excluded files (`.gitignore`)
 
-- `agent/auth.json` — Credentials OAuth
-- `agent/models.json` — IPs/apiKeys locales
-- `agent/trust.json` — Chemins de confiance
-- `agent/sessions/` — Sessions de discussion
-- `agent/bin/` — Binaires installés
-- `agent/*cache*.json` — Caches MCP
-- `agent/*onboarding*.json` — État onboarding
-- `pi-acp/` — State ACP
+| Pattern | Reason |
+|---|---|
+| `agent/auth.json` | OAuth credentials |
+| `agent/models.json` | Internal IPs & API keys |
+| `agent/trust.json` | Local trusted paths |
+| `agent/sessions/` | Conversation session data |
+| `agent/bin/` | Installed binaries |
+| `agent/*cache*.json` | MCP runtime caches |
+| `agent/*onboarding*.json` | Onboarding state |
+| `pi-acp/` | ACP state |
