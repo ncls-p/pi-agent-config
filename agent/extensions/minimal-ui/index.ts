@@ -80,7 +80,7 @@ function applyFooter(ctx: ExtensionContext) {
 					right +=
 						theme.fg("muted", ` ${repo}`) +
 						theme.fg("dim", ":") +
-						theme.fg("success", b);
+						theme.fg("success", trim(b, 20));
 				} else {
 					right += theme.fg("muted", ` ${repo}`);
 				}
@@ -98,7 +98,7 @@ function applyFooter(ctx: ExtensionContext) {
 				if (m)
 					right +=
 						(right ? theme.fg("dim", " · ") : "") +
-						theme.fg("accent", `◉ ${trim(m, 20)}`);
+						theme.fg("accent", `◉ ${m}`);
 				if (!right) return [""];
 				const pad = " ".repeat(Math.max(1, width - visibleWidth(right)));
 				return [truncateToWidth(pad + right, width)];
