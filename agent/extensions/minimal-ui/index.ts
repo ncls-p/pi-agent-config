@@ -54,7 +54,7 @@ function applyHeader(ctx: ExtensionContext) {
 			const logo = theme.fg("accent", theme.bold("◐ pi"));
 			const title = theme.fg("text", "minimal");
 			const left = `${logo} ${theme.fg("dim", "·")} ${title}`;
-			const project = theme.fg("muted", basename(ctx.cwd));
+			const project = theme.fg("muted", shortBasename(ctx.cwd, 14));
 			const pad = " ".repeat(
 				Math.max(1, width - visibleWidth(left) - visibleWidth(project)),
 			);
@@ -74,7 +74,7 @@ function applyFooter(ctx: ExtensionContext) {
 			invalidate() {},
 			render(width: number): string[] {
 				let right = "";
-				const repo = basename(ctx.cwd);
+				const repo = shortBasename(ctx.cwd, 12);
 				const b = footerData.getGitBranch();
 				if (b) {
 					right +=
@@ -98,7 +98,7 @@ function applyFooter(ctx: ExtensionContext) {
 				if (m)
 					right +=
 						(right ? theme.fg("dim", " · ") : "") +
-						theme.fg("accent", `◉ ${m}`);
+						theme.fg("accent", `◉ ${trim(m, 20)}`);
 				if (!right) return [""];
 				const pad = " ".repeat(Math.max(1, width - visibleWidth(right)));
 				return [truncateToWidth(pad + right, width)];
@@ -360,8 +360,10 @@ function trim(text: string, max: number) {
 	return text.length > max ? `${text.slice(0, max - 1)}…` : text;
 }
 
-function basename(path: string) {
-	return path.split("/").filter(Boolean).pop() ?? path;
+function shortBasename(path: string, max: number = 30): string {
+	const name = path.split("/").filter(Boolean).pop() ?? path;
+	if (name.length <= max) return name;
+	return `…${name.slice(-max + 1)}`;
 }
 
 function fmt(n: number) {
