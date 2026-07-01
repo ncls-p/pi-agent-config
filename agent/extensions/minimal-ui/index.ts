@@ -20,22 +20,27 @@ export default function (pi: ExtensionAPI) {
 
 	pi.on("session_start", (_event, ctx) => {
 		if (ctx.mode !== "tui") return;
-		apply(ctx);
+		apply(ctx, pi);
 	});
 
 	pi.on("model_select", (_event, ctx) => {
 		if (ctx.mode !== "tui") return;
 		applyHeader(ctx);
-		applyFooter(ctx);
+		applyFooter(ctx, pi);
+	});
+
+	pi.on("thinking_level_changed", (_event, ctx) => {
+		if (ctx.mode !== "tui") return;
+		applyFooter(ctx, pi);
 	});
 }
 
-function apply(ctx: ExtensionContext) {
+function apply(ctx: ExtensionContext, pi: ExtensionAPI) {
 	ctx.ui.setTitle("pi");
 	ctx.ui.setWorkingIndicator({ frames: [""] });
 	startWorkingDots(ctx);
 	applyHeader(ctx);
-	applyFooter(ctx);
+	applyFooter(ctx, pi);
 }
 
 function startWorkingDots(ctx: ExtensionContext) {
@@ -65,7 +70,7 @@ function applyHeader(ctx: ExtensionContext) {
 	}));
 }
 
-function applyFooter(ctx: ExtensionContext) {
+function applyFooter(ctx: ExtensionContext, pi: ExtensionAPI) {
 	const { ui, model } = ctx;
 	ui.setFooter((tui, theme, footerData) => {
 		const unsub = footerData.onBranchChange(() => tui.requestRender());
@@ -94,6 +99,11 @@ function applyFooter(ctx: ExtensionContext) {
 				} else if (tokens != null) {
 					right += theme.fg("warning", ` ${fmt(tokens)}t`);
 				}
+				const thinking = pi.getThinkingLevel?.() ?? "off";
+				if (thinking)
+					right +=
+						(right ? theme.fg("dim", " · ") : "") +
+						theme.fg(thinkingColor(thinking), `think:${thinking}`);
 				const m = model?.id ?? "";
 				if (m)
 					right +=
@@ -364,6 +374,17 @@ function shortBasename(path: string, max: number = 30): string {
 	const name = path.split("/").filter(Boolean).pop() ?? path;
 	if (name.length <= max) return name;
 	return `…${name.slice(-max + 1)}`;
+}
+
+function thinkingColor(level: string) {
+	const normalized = level.toLowerCase();
+	if (normalized === "off") return "thinkingOff";
+	if (normalized === "minimal") return "thinkingMinimal";
+	if (normalized === "low") return "thinkingLow";
+	if (normalized === "medium") return "thinkingMedium";
+	if (normalized === "high") return "thinkingHigh";
+	if (normalized === "xhigh") return "thinkingXhigh";
+	return "thinkingText";
 }
 
 function fmt(n: number) {
