@@ -1,0 +1,75 @@
+{
+  "$schema": "https://raw.githubusercontent.com/earendil-works/pi/main/packages/coding-agent/src/modes/interactive/theme/theme-schema.json",
+  "name": "minimal-ui",
+  "vars": {
+    "bg": "#0a0a0c",
+    "text": "#ffffff",
+    "muted": "#888888",
+    "dim": "#555555",
+    "border": "#222222"
+  },
+  "colors": {
+    "accent": "#93c5fd",
+    "border": "border",
+    "borderAccent": "border",
+    "borderMuted": "border",
+    "success": "#4ade80",
+    "error": "#f87171",
+    "warning": "#fbbf24",
+    "muted": "muted",
+    "dim": "dim",
+    "text": "text",
+    "thinkingText": "muted",
+
+    "selectedBg": "",
+    "userMessageBg": "",
+    "userMessageText": "#fcd34d",
+    "customMessageBg": "",
+    "customMessageText": "text",
+    "customMessageLabel": "text",
+    "toolPendingBg": "",
+    "toolSuccessBg": "",
+    "toolErrorBg": "",
+    "toolTitle": "text",
+    "toolOutput": "text",
+
+    "mdHeading": "text",
+    "mdLink": "#818cf8",
+    "mdLinkUrl": "muted",
+    "mdCode": "#93c5fd",
+    "mdCodeBlock": "text",
+    "mdCodeBlockBorder": "border",
+    "mdQuote": "muted",
+    "mdQuoteBorder": "border",
+    "mdHr": "border",
+    "mdListBullet": "muted",
+
+    "toolDiffAdded": "#4ade80",
+    "toolDiffRemoved": "#f87171",
+    "toolDiffContext": "text",
+
+    "syntaxComment": "#666666",
+    "syntaxKeyword": "#d8b4fe",
+    "syntaxFunction": "#93c5fd",
+    "syntaxVariable": "text",
+    "syntaxString": "#86efac",
+    "syntaxNumber": "#fcd34d",
+    "syntaxType": "#c4b5fd",
+    "syntaxOperator": "muted",
+    "syntaxPunctuation": "dim",
+
+    "thinkingOff": "dim",
+    "thinkingMinimal": "muted",
+    "thinkingLow": "muted",
+    "thinkingMedium": "muted",
+    "thinkingHigh": "#8b5cf6",
+    "thinkingXhigh": "#a78bfa",
+
+    "bashMode": "#fb923c"
+  },
+  "export": {
+    "pageBg": "bg",
+    "cardBg": "bg",
+    "infoBg": "bg"
+  }
+}

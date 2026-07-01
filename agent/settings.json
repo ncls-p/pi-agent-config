@@ -1,22 +1,14 @@
 {
-  "lastChangelogVersion": "0.79.8",
-  "defaultProvider": "cortex",
-  "defaultModel": "qwen3.6-27B-pi-tune",
-  "defaultThinkingLevel": "high",
+  "lastChangelogVersion": "0.80.3",
+  "theme": "minimal-ui",
   "packages": [
     "npm:pi-lens",
-    "npm:pi-mcp-adapter",
-    "npm:pi-extmgr",
-    "npm:pi-markdown-preview",
-    "npm:@feniix/pi-exa",
-    "npm:context-mode",
-    "npm:pi-hermes-memory"
+    "npm:pi-mcp-adapter"
   ],
   "enabledModels": [
-    "openai-codex/gpt-5.5",
-    "cortex/qwen3.6-27b",
-    "cortex/gemma4-31b",
-    "cortex/qwen3.6-27B-pi-tune"
+    "cortex/nvidia/Qwen3.6-27B-NVFP4",
+    "openai-codex/gpt-5.5"
   ],
-  "theme": "pi-minimal"
+  "defaultProvider": "cortex",
+  "defaultModel": "nvidia/Qwen3.6-27B-NVFP4"
 }

@@ -13,6 +13,7 @@ id_ed25519*
 agent/sessions/
 context-mode/
 agent/*cache*.json
+agent/*onboarding*.json
 agent/trust.json
 pi-acp/
 *.db
