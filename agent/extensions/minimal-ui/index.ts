@@ -14,6 +14,8 @@ import {
 import { Text, truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
 
 let workingDotsTimer: ReturnType<typeof setInterval> | undefined;
+let compactResumeTimer: ReturnType<typeof setTimeout> | undefined;
+let compactResumeToken = 0;
 
 export default function (pi: ExtensionAPI) {
 	registerToolRenderers(pi);
@@ -29,10 +31,20 @@ export default function (pi: ExtensionAPI) {
 		applyFooter(ctx, pi);
 	});
 
-	pi.on("thinking_level_changed", (_event, ctx) => {
+	pi.on("thinking_level_select", (_event, ctx) => {
 		if (ctx.mode !== "tui") return;
 		applyFooter(ctx, pi);
 	});
+
+	pi.on("session_compact", (event, ctx) => {
+		if (!event.willRetry) return;
+		scheduleCompactResumeWatch(pi, ctx);
+	});
+
+	const cancelCompactResumeWatch = () => clearCompactResumeWatch();
+	pi.on("agent_start", cancelCompactResumeWatch);
+	pi.on("turn_start", cancelCompactResumeWatch);
+	pi.on("message_start", cancelCompactResumeWatch);
 }
 
 function apply(ctx: ExtensionContext, pi: ExtensionAPI) {
@@ -50,6 +62,25 @@ function startWorkingDots(ctx: ExtensionContext) {
 	const tick = () => ctx.ui.setWorkingMessage(frames[i++ % frames.length]);
 	tick();
 	workingDotsTimer = setInterval(tick, 220);
+}
+
+function clearCompactResumeWatch() {
+	compactResumeToken++;
+	if (compactResumeTimer) clearTimeout(compactResumeTimer);
+	compactResumeTimer = undefined;
+}
+
+function scheduleCompactResumeWatch(pi: ExtensionAPI, ctx: ExtensionContext) {
+	clearCompactResumeWatch();
+	const token = compactResumeToken;
+	compactResumeTimer = setTimeout(() => {
+		if (token !== compactResumeToken) return;
+		compactResumeTimer = undefined;
+		if (!ctx.isIdle() || ctx.hasPendingMessages()) return;
+		pi.sendUserMessage(
+			"Continue exactly where you left off after context compaction. Resume the previous task using the compaction summary and current context; do not ask for confirmation unless you are blocked.",
+		);
+	}, 6000);
 }
 
 function applyHeader(ctx: ExtensionContext) {
