@@ -1,17 +1,20 @@
 {
-    "mcpServers": {
-        "WebAccess": {
-            "source": "custom",
-            "url": "https://metamcp.nclsp.com/metamcp/WebAccess/mcp",
-            "headers": {
-                "X-API-Key": "${WEBACCESS_API_KEY}"
-            },
-            "directTools": true
-        },
-        "chrome-devtools": {
-            "command": "npx",
-            "args": ["-y", "chrome-devtools-mcp@latest"],
-            "directTools": true
-        }
+  "mcpServers": {
+    "WebAccess": {
+      "source": "custom",
+      "url": "https://metamcp.nclsp.com/metamcp/WebAccess/mcp",
+      "headers": {
+        "X-API-Key": "${WEBACCESS_API_KEY}"
+      },
+      "directTools": true
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "chrome-devtools-mcp@latest"
+      ],
+      "directTools": true
     }
+  }
 }

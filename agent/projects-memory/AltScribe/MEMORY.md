@@ -1,0 +1,1 @@
+AltScribe: meeting/document context uploads now use chunked routes backed by audioObjectStorage/S3 (`/context/chunks` + `/context/complete`). Recorder/upload flows await `uploadMeetingContext` before starting live transcription/audio upload, so context storage/extraction failures can look like STT not starting when files are attached. <!-- created=2026-07-02, last=2026-07-02 -->

@@ -3,12 +3,15 @@
   "theme": "minimal-ui",
   "packages": [
     "npm:pi-lens",
-    "npm:pi-mcp-adapter"
+    "npm:pi-mcp-adapter",
+    "npm:@narumitw/pi-goal",
+    "npm:pi-hermes-memory"
   ],
   "enabledModels": [
     "cortex/nvidia/Qwen3.6-27B-NVFP4",
     "openai-codex/gpt-5.5"
   ],
   "defaultProvider": "cortex",
-  "defaultModel": "nvidia/Qwen3.6-27B-NVFP4"
+  "defaultModel": "nvidia/Qwen3.6-27B-NVFP4",
+  "defaultThinkingLevel": "xhigh"
 }
