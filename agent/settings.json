@@ -13,5 +13,5 @@
   ],
   "defaultProvider": "cortex",
   "defaultModel": "nvidia/Qwen3.6-27B-NVFP4",
-  "defaultThinkingLevel": "xhigh"
+  "defaultThinkingLevel": "high"
 }

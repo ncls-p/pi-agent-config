@@ -11,3 +11,7 @@ ai-hub sandbox architecture: OpenSandbox was replaced by a custom `sandbox-runne
 ai-hub code workspace/tool gating: models must not enter code workspace mode or get code workspace tools unless those tools are explicitly enabled/bound. Do not auto-inject code workspace tools or text-to-workspace protocols when tools are disabled. <!-- created=2026-07-02, last=2026-07-02 -->
 §
 ai-hub accessibility convention: preserve WCAG/a11y guardrails such as programmatically labelled custom controls (Input/Textarea/SelectTrigger/Switch/Checkbox), visible focus styles/scroll margins, default Button type='button', and keyboard alternatives for drag-only interactions; `test/unit/accessibility-controls.test.ts` guards labelled controls. <!-- created=2026-07-02, last=2026-07-02 -->
+§
+AI Hub IAM convention: workspace.member/basic users may read provider metadata and models to configure their own agents (`providers.viewMetadata`, `models.view`) and may manage only their own workspace API keys via `apiKeys.manageOwn`; full provider/model management and all-key management remain admin-only. <!-- created=2026-07-03, last=2026-07-03 -->
+§
+ai-hub empty-state UX/IAM: a basic user entering an empty workspace (no providers/models/agents created yet) must not be trapped on chat/setup; the app shell/header and sign-out must remain accessible, and the empty chat state should offer permitted actions such as creating an assistant rather than only admin/provider setup. <!-- created=2026-07-03, last=2026-07-03 -->

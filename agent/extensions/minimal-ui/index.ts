@@ -14,6 +14,10 @@ import {
 import { Text, truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
 
 let workingDotsTimer: ReturnType<typeof setInterval> | undefined;
+let headerAnimationTimer: ReturnType<typeof setInterval> | undefined;
+let requestHeaderRender: (() => void) | undefined;
+let headerActive = false;
+let headerFrame = 0;
 let compactResumeTimer: ReturnType<typeof setTimeout> | undefined;
 let compactResumeToken = 0;
 
@@ -22,6 +26,7 @@ export default function (pi: ExtensionAPI) {
 
 	pi.on("session_start", (_event, ctx) => {
 		if (ctx.mode !== "tui") return;
+		headerActive = !ctx.isIdle();
 		apply(ctx, pi);
 	});
 
@@ -41,8 +46,20 @@ export default function (pi: ExtensionAPI) {
 		scheduleCompactResumeWatch(pi, ctx);
 	});
 
+	pi.on("agent_start", () => {
+		setHeaderActive(true);
+		clearCompactResumeWatch();
+	});
+	pi.on("agent_end", () => setHeaderActive(false));
+	pi.on("session_shutdown", () => {
+		setHeaderActive(false);
+		stopHeaderAnimation();
+		if (workingDotsTimer) clearInterval(workingDotsTimer);
+		workingDotsTimer = undefined;
+		clearCompactResumeWatch();
+	});
+
 	const cancelCompactResumeWatch = () => clearCompactResumeWatch();
-	pi.on("agent_start", cancelCompactResumeWatch);
 	pi.on("turn_start", cancelCompactResumeWatch);
 	pi.on("message_start", cancelCompactResumeWatch);
 }
@@ -84,21 +101,66 @@ function scheduleCompactResumeWatch(pi: ExtensionAPI, ctx: ExtensionContext) {
 }
 
 function applyHeader(ctx: ExtensionContext) {
-	ctx.ui.setHeader((_tui, theme) => ({
-		invalidate() {},
-		render(width: number): string[] {
-			const logo = theme.fg("accent", theme.bold("◐ pi"));
-			const title = theme.fg("text", "minimal");
-			const left = `${logo} ${theme.fg("dim", "·")} ${title}`;
-			const project = theme.fg("muted", shortBasename(ctx.cwd, 14));
-			const pad = " ".repeat(
-				Math.max(1, width - visibleWidth(left) - visibleWidth(project)),
-			);
-			const line = truncateToWidth(left + pad + project, width);
-			const rule = theme.fg("borderMuted", "─".repeat(Math.max(0, width)));
-			return [line, rule];
-		},
-	}));
+	startHeaderAnimation();
+	ctx.ui.setHeader((tui, theme) => {
+		const rerender = () => tui.requestRender();
+		requestHeaderRender = rerender;
+		return {
+			dispose() {
+				if (requestHeaderRender === rerender) requestHeaderRender = undefined;
+			},
+			invalidate() {},
+			render(width: number): string[] {
+				const logo = renderStatusLogo(theme);
+				const title = theme.fg("text", "minimal");
+				const state = headerActive
+					? theme.fg("success", "working")
+					: theme.fg("dim", "idle");
+				const left = `${logo} ${theme.fg("dim", "·")} ${title} ${theme.fg("dim", "·")} ${state}`;
+				const project = theme.fg("muted", shortBasename(ctx.cwd, 14));
+				const pad = " ".repeat(
+					Math.max(1, width - visibleWidth(left) - visibleWidth(project)),
+				);
+				const line = truncateToWidth(left + pad + project, width);
+				const rule = theme.fg("borderMuted", "─".repeat(Math.max(0, width)));
+				return [line, rule];
+			},
+		};
+	});
+}
+
+function startHeaderAnimation() {
+	if (headerAnimationTimer) return;
+	headerAnimationTimer = setInterval(() => {
+		if (!headerActive) return;
+		headerFrame++;
+		requestHeaderRender?.();
+	}, 140);
+}
+
+function stopHeaderAnimation() {
+	if (headerAnimationTimer) clearInterval(headerAnimationTimer);
+	headerAnimationTimer = undefined;
+	requestHeaderRender = undefined;
+}
+
+function setHeaderActive(active: boolean) {
+	if (headerActive === active) return;
+	headerActive = active;
+	headerFrame = 0;
+	requestHeaderRender?.();
+}
+
+function renderStatusLogo(theme: {
+	bold(text: string): string;
+	fg(color: string, text: string): string;
+}) {
+	if (!headerActive) return theme.fg("dim", theme.bold("○ pi"));
+	const frames = ["◐", "◓", "◑", "◒"];
+	return theme.fg(
+		"accent",
+		theme.bold(`${frames[headerFrame % frames.length]} pi`),
+	);
 }
 
 function applyFooter(ctx: ExtensionContext, pi: ExtensionAPI) {
